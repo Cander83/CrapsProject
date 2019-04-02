@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Craps.DataModels;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Http;
 
 namespace Craps.ApiDataHandlers
 {
@@ -15,20 +12,13 @@ namespace Craps.ApiDataHandlers
         private static HttpClient client;
 
         public RollDataHandler()
-        {
-
-            var proxy = new WebProxy()
-            {
-                Address = new Uri($"{"http://wpad.stab.corp.local/wpad-us.dat"}:{8083}"),
-                UseDefaultCredentials = true,
-
-            };
+        {                 
 
             // Now create a client handler which uses that proxy
 
-            var httpClientHandler = new HttpClientHandler() {Proxy = proxy};
+            var httpClientHandler = new HttpClientHandler();
 
-        client = new HttpClient(httpClientHandler);
+            client = new HttpClient(httpClientHandler);
 
         }
 
@@ -36,13 +26,11 @@ namespace Craps.ApiDataHandlers
         {
             try
             {
-                var stringTask = client.GetAsync("Https://rolz.org/api/?1d6.json");//client.GetStringAsync("https://rolz.org/api/?1d6.json");
+                var stringTask = client.GetStringAsync("Https://rolz.org/api/?1d6.json");//client.GetStringAsync("https://rolz.org/api/?1d6.json");
+                
+                var jsonString = await stringTask;//result.Content.ReadAsFormDataAsync();
 
-                HttpResponseMessage result = await stringTask;
-
-                var jsonString = result.Content.ToString();
-
-                RollDataModel output = JsonConvert.DeserializeObject<RollDataModel>(jsonString);
+                RollDataModel output = JsonConvert.DeserializeObject<RollDataModel>(jsonString.ToString());
 
                 return output;
             }
