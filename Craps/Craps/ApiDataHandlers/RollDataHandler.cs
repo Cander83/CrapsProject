@@ -3,11 +3,12 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Craps.DataModels;
+using Craps.EntityControllers.CrapsObjects;
 using Newtonsoft.Json;
 
 namespace Craps.ApiDataHandlers
 {
-    public class RollDataHandler
+    public class RollDataHandler:IRollDataHandler
     {
         private static HttpClient client;
 
@@ -22,7 +23,7 @@ namespace Craps.ApiDataHandlers
 
         }
 
-        public async Task<RollDataModel> GetRoll()
+        public async Task<RollDataModel> GetRollAsync()
         {
             try
             {

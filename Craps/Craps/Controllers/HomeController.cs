@@ -15,6 +15,11 @@ namespace Craps.Controllers
             return View();
         }
 
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
