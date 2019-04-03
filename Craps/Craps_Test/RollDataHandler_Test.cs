@@ -19,7 +19,7 @@ namespace Craps_Test
             RollDataHandler testedHandler = new RollDataHandler();
 
             //Act
-            var result =  await testedHandler.GetRoll();
+            var result =  await testedHandler.GetRollAsync();
 
             //Assert
             RollDataModel expectedModel = new RollDataModel();

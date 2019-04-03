@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Craps.ApiDataHandlers;
+using Craps.EntityControllers.CrapsObjects;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +11,20 @@ namespace Craps_Test
     public class MyTestClass
     {
         [TestMethod]
-        public void MyTestMethod()
+        public void GetCrapsResult()
         {
+            //Array
+            CrapsController testedController = new CrapsController(new RollDataHandler());
+            CrapsResultModel inputModel = new CrapsResultModel();
+            inputModel.FirstRollValue = 3;
+            inputModel.SecondRollValue = 4;
+            string result = null;
 
+            //Act
+            result = testedController.GetCrapsResult(inputModel.RollSum, inputModel.GameResult, inputModel.Point);
+
+            //Assert
+            Assert.AreEqual("win", result);
         }
     }
 }
